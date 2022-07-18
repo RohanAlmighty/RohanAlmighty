@@ -23,7 +23,7 @@ Go check out --> https://rohanalmighty-fastapi-tasksapp.herokuapp.com
 
 ## 🛠 Skills
 
-![](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue) 
+[![](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)(https://www.python.org/)]
 
 ![](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
 
