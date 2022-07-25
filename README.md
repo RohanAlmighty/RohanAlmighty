@@ -6,9 +6,12 @@ I have developed web-apps using Flask, FastAPI, Jinja.
 Go check out --> https://rohanalmighty-fastapi-tasksapp.herokuapp.com
 
 
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=RohanAlmighty)
+## 📊 GitHub Stats:
 
-![](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=RohanAlmighty&theme=vue)
+![](https://github-readme-stats.vercel.app/api?username=RohanAlmighty&theme=dracula&hide_border=true&include_all_commits=false&count_private=false)</br>
+![](https://github-readme-streak-stats.herokuapp.com/?user=RohanAlmighty&theme=dracula&hide_border=true)</br>
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=RohanAlmighty&theme=dracula&hide_border=true&include_all_commits=false&count_private=false)
+
 
 ## 🔗 Connect With Me
 
