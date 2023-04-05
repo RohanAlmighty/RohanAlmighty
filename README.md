@@ -1,9 +1,7 @@
 
 ## 🚀 About Me
 I'm a python developer who is just getting started.
-I have developed web-apps using Flask, FastAPI, Jinja.
-
-Go check out --> https://rohanalmighty-fastapi-tasksapp.herokuapp.com
+I have developed web-apps using Flask, FastAPI, Jinja2, SQLAlchemy.
 
 
 ## 📊 GitHub Stats:
