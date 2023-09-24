@@ -1,7 +1,8 @@
 ## 🚀 About Me
 
-I'm a python developer who is just getting started.
+Because I am not the Python Developer that GitHub deserves, but the one it needs right now.</br>
 I have developed web-apps using Flask, FastAPI, Jinja2, SQLAlchemy.
+Getting my hands on concurrent and parallel programming in Python at the moment.
 
 Hey, go check out https://python-fastapi-socialapp.onrender.com
 
