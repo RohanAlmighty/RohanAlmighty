@@ -1767,9 +1767,10 @@
               // Initialize other animations after loading
               setTimeout(() => {
                 createMatrixBackground();
-                animateSkillBars();
-                animateTimeline();
                 createScanLines();
+
+                // Initialize animations
+                setTimeout(checkVisibility, 200);
 
                 // Remove loading screen from DOM
                 loadingScreen.style.display = "none";
@@ -1939,6 +1940,48 @@
             window.open("https://github.com/yourRohanAlmighty", "_blank");
           });
         }
+      });
+      function checkVisibility() {
+        // Animate skill bars
+        const skillCards = document.querySelectorAll(".skill-card");
+        skillCards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const progress = card.getAttribute("data-progress");
+          const progressBar = card.querySelector(".skill-progress");
+
+          if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
+            // Animate the progress bar
+            if (progressBar.style.width === "0%" || !progressBar.style.width) {
+              progressBar.style.width = `${progress}%`;
+              progressBar.style.transition = "width 1.5s ease";
+            }
+          }
+        });
+
+        // Animate timeline items
+        const timelineItems = document.querySelectorAll(".timeline-item");
+        timelineItems.forEach((item) => {
+          const rect = item.getBoundingClientRect();
+
+          if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
+            item.classList.add("visible");
+          }
+        });
+      }
+
+      // Call on load and scroll
+      window.addEventListener("load", checkVisibility);
+      window.addEventListener("scroll", checkVisibility);
+
+      // Initialize skill bars with 0% width
+      document.addEventListener("DOMContentLoaded", function () {
+        const progressBars = document.querySelectorAll(".skill-progress");
+        progressBars.forEach((bar) => {
+          bar.style.width = "0%";
+        });
+
+        // Trigger initial check
+        setTimeout(checkVisibility, 100);
       });
     </script>
   </body>
