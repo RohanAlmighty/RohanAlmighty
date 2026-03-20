@@ -304,6 +304,14 @@
         animation: fadeInUp 1s 0.5s forwards;
       }
 
+      .btn-container {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 1rem;
+      }
+
       .btn {
         display: inline-flex;
         align-items: center;
@@ -327,6 +335,7 @@
         z-index: 1;
         opacity: 0;
         animation: fadeInUp 1s 0.7s forwards;
+        white-space: nowrap;
       }
 
       .btn:before {
@@ -354,7 +363,7 @@
         background: transparent;
         border: 2px solid var(--primary);
         color: var(--primary);
-        margin-left: 1rem;
+        margin-left: 0;
       }
 
       .btn-outline:hover {
@@ -410,7 +419,6 @@
         line-height: 1.8;
       }
 
-      /* FIXED: Terminal lines are now visible by default */
       .terminal-line {
         margin-bottom: 0.5rem;
         display: flex;
@@ -434,7 +442,6 @@
         vertical-align: middle;
       }
 
-      /* Only show cursor on last line */
       .terminal-line:not(:last-child) .cursor {
         display: none;
       }
@@ -443,7 +450,7 @@
       section {
         padding: 6rem 0;
         position: relative;
-        display: block !important; /* FORCE SECTIONS TO DISPLAY */
+        display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
       }
@@ -534,7 +541,7 @@
         transition: width 1.5s ease;
       }
 
-      /* Experience - FIXED Timeline */
+      /* Experience */
       .experience-container {
         max-width: 900px;
         margin: 0 auto;
@@ -545,15 +552,14 @@
         position: relative;
       }
 
-      /* Vertical line removed */
       .timeline-line {
         display: none;
       }
 
       .timeline-item {
         margin-bottom: 4rem;
-        opacity: 1; /* FORCE VISIBLE */
-        transform: translateY(0); /* FORCE VISIBLE */
+        opacity: 0;
+        transform: translateY(30px);
         transition: all 0.8s ease;
         position: relative;
         display: block !important;
@@ -624,7 +630,6 @@
         font-family: "JetBrains Mono", monospace;
       }
 
-      /* Clean bullet points */
       .achievements-list {
         list-style: none;
         padding-left: 0;
@@ -646,7 +651,6 @@
         font-size: 1.2em;
       }
 
-      /* Divider between items */
       .timeline-divider {
         height: 2px;
         background: linear-gradient(
@@ -931,13 +935,39 @@
         }
 
         .btn-container {
-          display: flex;
           flex-direction: column;
+          width: 100%;
           gap: 1rem;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+          white-space: normal;
+          text-align: center;
         }
 
         .btn-outline {
           margin-left: 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .btn {
+          padding: 0.8rem 1.5rem;
+          font-size: 0.9rem;
+        }
+
+        .btn-container {
+          gap: 0.8rem;
+        }
+
+        .hero-content h1 {
+          font-size: 2.2rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
         }
       }
     </style>
@@ -1060,7 +1090,7 @@
     </div>
 
     <!-- Background Elements -->
-    <div class="matrix-bg"></div>
+    <canvas class="matrix-bg"></canvas>
 
     <!-- Fixed Terminal Scan Line - No Overlap -->
     <div class="scan-line-container">
@@ -1115,7 +1145,6 @@
                 <div class="terminal-dot dot-green"></div>
               </div>
               <div class="terminal-content">
-                <!-- FIXED: Terminal lines are now visible by default -->
                 <div class="terminal-line">
                   <span class="prompt">$</span> whoami
                 </div>
@@ -1220,7 +1249,7 @@
       </div>
     </section>
 
-    <!-- Experience Section - COMPLETELY FIXED -->
+    <!-- Experience Section -->
     <section id="experience" style="background: rgba(0, 0, 0, 0.3)">
       <div class="container">
         <h2 class="section-title">Work Experience</h2>
@@ -1554,7 +1583,7 @@
             <div
               class="contact-item"
               onclick="
-                window.open('https://github.com/yourRohanAlmighty', '_blank')
+                window.open('https://github.com/RohanAlmighty', '_blank')
               "
             >
               <div class="contact-icon">
@@ -1562,7 +1591,7 @@
               </div>
               <div>
                 <h3>GitHub</h3>
-                <p>github.com/yourRohanAlmighty</p>
+                <p>github.com/RohanAlmighty</p>
               </div>
             </div>
           </div>
@@ -1780,69 +1809,89 @@
         }, 100);
       });
 
-      // Mobile menu toggle
-      const menuToggle = document.getElementById("menuToggle");
-      const navLinks = document.getElementById("navLinks");
-
-      menuToggle.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-        menuToggle.innerHTML = navLinks.classList.contains("active")
-          ? '<i class="fas fa-times"></i>'
-          : '<i class="fas fa-terminal"></i>';
-      });
-
-      // Close mobile menu when clicking a link
-      document.querySelectorAll(".nav-links a").forEach((link) => {
-        link.addEventListener("click", () => {
-          navLinks.classList.remove("active");
-          menuToggle.innerHTML = '<i class="fas fa-terminal"></i>';
-        });
-      });
-
-      // Set current year in footer
-      document.getElementById("currentYear").textContent =
-        new Date().getFullYear();
-
-      // Form submission for Formspree
-      document
-        .getElementById("contactForm")
-        .addEventListener("submit", function () {
-          const btn = this.querySelector(".btn");
-          const originalText = btn.innerHTML;
-
-          // Show loading state
-          btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-          btn.disabled = true;
-
-          // Form will submit to Formspree automatically
-          // Formspree will redirect to their thank you page
-        });
-
-      // Animate skill bars on scroll
-      const skillCards = document.querySelectorAll(".skill-card");
-
-      function animateSkillBars() {
+      // Improved scroll animations for skill bars and timeline
+      function checkVisibility() {
+        // Animate skill bars
+        const skillCards = document.querySelectorAll(".skill-card");
         skillCards.forEach((card) => {
           const rect = card.getBoundingClientRect();
           const progress = card.getAttribute("data-progress");
           const progressBar = card.querySelector(".skill-progress");
 
-          if (rect.top < window.innerHeight - 100) {
-            progressBar.style.width = `${progress}%`;
+          if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
+            // Animate the progress bar
+            if (progressBar.style.width === "0%" || !progressBar.style.width) {
+              progressBar.style.width = `${progress}%`;
+              progressBar.style.transition = "width 1.5s ease";
+            }
+          }
+        });
+
+        // Animate timeline items
+        const timelineItems = document.querySelectorAll(".timeline-item");
+        timelineItems.forEach((item) => {
+          const rect = item.getBoundingClientRect();
+
+          if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
+            item.classList.add("visible");
           }
         });
       }
 
-      // Animate timeline items on scroll
-      const timelineItems = document.querySelectorAll(".timeline-item");
+      // Initialize skill bars with 0% width
+      document.addEventListener("DOMContentLoaded", function () {
+        const progressBars = document.querySelectorAll(".skill-progress");
+        progressBars.forEach((bar) => {
+          bar.style.width = "0%";
+        });
 
-      function animateTimeline() {
-        timelineItems.forEach((item) => {
-          const rect = item.getBoundingClientRect();
+        // Trigger initial check
+        setTimeout(checkVisibility, 100);
+      });
 
-          if (rect.top < window.innerHeight - 100) {
-            item.classList.add("visible");
+      // Call on scroll
+      window.addEventListener("scroll", checkVisibility);
+
+      // Mobile menu toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
+
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener("click", () => {
+          navLinks.classList.toggle("active");
+          menuToggle.innerHTML = navLinks.classList.contains("active")
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-terminal"></i>';
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll(".nav-links a").forEach((link) => {
+          link.addEventListener("click", () => {
+            navLinks.classList.remove("active");
+            if (menuToggle)
+              menuToggle.innerHTML = '<i class="fas fa-terminal"></i>';
+          });
+        });
+      }
+
+      // Set current year in footer
+      const currentYearSpan = document.getElementById("currentYear");
+      if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
+      }
+
+      // Form submission for Formspree
+      const contactForm = document.getElementById("contactForm");
+      if (contactForm) {
+        contactForm.addEventListener("submit", function () {
+          const btn = this.querySelector(".btn");
+          if (btn) {
+            const originalText = btn.innerHTML;
+            // Show loading state
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
           }
+          // Form will submit to Formspree automatically
         });
       }
 
@@ -1867,6 +1916,7 @@
         const drops = Array(columns).fill(1);
 
         function drawMatrix() {
+          if (!ctx || !canvas) return;
           // Semi-transparent black background for fade effect
           ctx.fillStyle = "rgba(10, 10, 15, 0.04)";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -1915,73 +1965,23 @@
       // Contact card click handlers
       document.addEventListener("DOMContentLoaded", function () {
         // Email card fallback
-        const emailCard = document.querySelector(".contact-item:nth-child(3)");
-        if (emailCard) {
-          emailCard.addEventListener("click", function () {
-            window.location.href =
-              "mailto:rohanduttaperfect@gmail.com?subject=Contact from Portfolio&body=Hi Rohan,%0D%0A%0D%0AI came across your portfolio and wanted to connect...";
-          });
-        }
-
-        // LinkedIn card
-        const linkedinCard = document.querySelector(
-          ".contact-item:nth-child(4)",
-        );
-        if (linkedinCard) {
-          linkedinCard.addEventListener("click", function () {
-            window.open("https://linkedin.com/in/rohanalmighty", "_blank");
-          });
-        }
-
-        // GitHub card
-        const githubCard = document.querySelector(".contact-item:nth-child(5)");
-        if (githubCard) {
-          githubCard.addEventListener("click", function () {
-            window.open("https://github.com/yourRohanAlmighty", "_blank");
-          });
-        }
-      });
-      function checkVisibility() {
-        // Animate skill bars
-        const skillCards = document.querySelectorAll(".skill-card");
-        skillCards.forEach((card) => {
-          const rect = card.getBoundingClientRect();
-          const progress = card.getAttribute("data-progress");
-          const progressBar = card.querySelector(".skill-progress");
-
-          if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
-            // Animate the progress bar
-            if (progressBar.style.width === "0%" || !progressBar.style.width) {
-              progressBar.style.width = `${progress}%`;
-              progressBar.style.transition = "width 1.5s ease";
-            }
+        const emailCards = document.querySelectorAll(".contact-item");
+        emailCards.forEach((card, index) => {
+          if (card.innerHTML.includes("envelope")) {
+            card.addEventListener("click", function () {
+              window.location.href =
+                "mailto:rohanduttaperfect@gmail.com?subject=Contact from Portfolio&body=Hi Rohan,%0D%0A%0D%0AI came across your portfolio and wanted to connect...";
+            });
+          } else if (card.innerHTML.includes("linkedin")) {
+            card.addEventListener("click", function () {
+              window.open("https://linkedin.com/in/rohanalmighty", "_blank");
+            });
+          } else if (card.innerHTML.includes("github")) {
+            card.addEventListener("click", function () {
+              window.open("https://github.com/RohanAlmighty", "_blank");
+            });
           }
         });
-
-        // Animate timeline items
-        const timelineItems = document.querySelectorAll(".timeline-item");
-        timelineItems.forEach((item) => {
-          const rect = item.getBoundingClientRect();
-
-          if (rect.top < window.innerHeight - 100 && rect.bottom > 0) {
-            item.classList.add("visible");
-          }
-        });
-      }
-
-      // Call on load and scroll
-      window.addEventListener("load", checkVisibility);
-      window.addEventListener("scroll", checkVisibility);
-
-      // Initialize skill bars with 0% width
-      document.addEventListener("DOMContentLoaded", function () {
-        const progressBars = document.querySelectorAll(".skill-progress");
-        progressBars.forEach((bar) => {
-          bar.style.width = "0%";
-        });
-
-        // Trigger initial check
-        setTimeout(checkVisibility, 100);
       });
     </script>
   </body>
